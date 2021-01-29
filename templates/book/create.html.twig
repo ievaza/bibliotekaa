@@ -13,11 +13,9 @@
         <select name="book_author_id">
         {% for author in authors %}
         <option value="{{author.id}}">{{author.name}} {{author.surname}}</option>
-
         {% endfor %}
 
         </select>
-
 
         <button type="submit"> Add new Book! </button>
     </form>

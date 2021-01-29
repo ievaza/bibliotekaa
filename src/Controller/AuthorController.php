@@ -31,6 +31,8 @@ class AuthorController extends AbstractController
     #[Route('/author/store', name:'author_store', methods:['POST'])]
     public function store(Request $r): Response
     {
+        
+
         $author = new Author;
         $author->
         setName($r->request->get('author_name'))->
@@ -79,6 +81,10 @@ class AuthorController extends AbstractController
         getRepository(Author::class)->
         find($id);
 
+         if ($author->getBooks()->count() > 0) {
+            return new Response('Trinti negalima nes turi knygu');
+        }
+        
         $enitytManager = $this->getDoctrine()->getManager();
         $enitytManager->remove($author);
         $enitytManager->flush();

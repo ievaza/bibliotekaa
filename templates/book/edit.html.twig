@@ -10,7 +10,7 @@
         ISBN:  <input type="text" name="book_isbn" value="{{book.isbn}}"> 
         Pages:  <input type="text" name="book_pages" value="{{book.pages}}"> 
         About:  <textarea name="book_about"> {{book.about}} </textarea>
-        <select name="book_author_id">
+        <select name="books_author">
         {% for author in authors %}
         <option value="{{author.id}}" {% if author.id == book.authorId %} selected {% endif %}>
         {{author.name}} {{author.surname}}
@@ -18,6 +18,6 @@
         {% endfor %}
         </select>
 
-        <button type="submit"> Add new Book! </button>
+        <button type="submit"> Edit new Book! </button>
     </form>
 {% endblock %}

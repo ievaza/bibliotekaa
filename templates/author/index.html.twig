@@ -14,6 +14,10 @@ List:
     <form action="{{path('author_delete',{id: author.id}) }}" method="POST"> 
     <button type="sumbit"> DELETE </button>
     </form> 
+        Autoriaus knygos: <br>
+        {% for  book in  author.books  %}
+        {{ book.title }} <br>
+        {% endfor %}
 
     </li>
     {% endfor %}
