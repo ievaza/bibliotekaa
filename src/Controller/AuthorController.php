@@ -11,15 +11,40 @@ use App\Entity\Author;
 class AuthorController extends AbstractController
 {
     #[Route('/author', name: 'author_index', methods: ['GET'])]
-    public function index(): Response
+    public function index(Request $r): Response
     {
+        // $authors = $this->getDoctrine()->
+        // getRepository(Author::class)->
+        // findAll();
+
         $authors = $this->getDoctrine()->
-        getRepository(Author::class)->
-        findAll();
+        getRepository(Author::class);
+
+        if('name_az' == $r->query->get('sort')) {
+            $authors = $authors->findBy([],['name'=>'asc']);
+
+        } 
+        elseif ('name_za' == $r->query->get('sort')){
+             $authors = $authors->findBy([],['name'=>'desc']);
+
+        }   
+        elseif('surname_az' == $r->query->get('sort')) {
+            $authors = $authors->findBy([],['surname'=>'asc']);
+
+        } 
+         elseif ('surname_za' == $r->query->get('sort')){
+             $authors = $authors->findBy([],['surname'=>'desc']);
+
+        }  
+         else {
+            $authors =$authors->findAll();
+        }
+
 
         
         return $this->render('author/index.html.twig', [
             'authors' => $authors,
+            'sortBy' =>$r->query->get('sort'),
         ]);
     }
     #[Route('/author/create', name: 'author_create', methods: ['GET'])]
