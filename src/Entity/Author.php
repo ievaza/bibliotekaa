@@ -6,6 +6,9 @@ use App\Repository\AuthorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 
 /**
  * @ORM\Entity(repositoryClass=AuthorRepository::class)
@@ -20,12 +23,20 @@ class Author
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=64)
-     */
+     * @ORM\Column(type="string", length=64) 
+     * @Assert\NotBlank(message="Blogai darai, vardas negali buti tuscias")
+     * @Assert\Length(
+     * min=3,
+     * max=64,
+     * minMessage = "Turi buti bent 3 simboliai",
+     * maxMessage = "Gali buti max 64 simboliai ",
+     * )
+    */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\NotBlank(message="Blogai darai, pavarde negali buti tuscias")
      */
     private $surname;
 

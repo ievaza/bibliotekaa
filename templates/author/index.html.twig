@@ -6,7 +6,7 @@
 
     <h1>Author in Library</h1>
     List  order by:
-    <form action="" method="GET">
+    <form action="{{path('author_index')}}" method="GET">
         <select name="sort">
             <option value="default"> default </option>
             <option value="name_az" {% if sortBy=='name_az' %} selected {% endif %} >name </option>
@@ -16,7 +16,7 @@
         </select>
     <button type="sumbit">SORT IT! </button> 
     </form>
-    <a href="{{path('author_index')}}">CLEAR </a>
+    <a href="{{path('author_index')}}"> CLEAR </a>
 
     <ul>
     {% for author in authors %}

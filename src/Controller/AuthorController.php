@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Entity\Author;
 
 class AuthorController extends AbstractController
@@ -20,48 +21,44 @@ class AuthorController extends AbstractController
         $authors = $this->getDoctrine()->
         getRepository(Author::class);
 
-        if('name_az' == $r->query->get('sort')) {
-            $authors = $authors->findBy([],['name'=>'asc']);
+        if('name_az' == $r->query->get('sort')) { $authors = $authors->findBy([],['name'=>'asc']);} 
+        elseif ('name_za' == $r->query->get('sort')){ $authors = $authors->findBy([],['name'=>'desc']);}   
+        elseif('surname_az' == $r->query->get('sort')) { $authors = $authors->findBy([],['surname'=>'asc']);} 
+        elseif ('surname_za' == $r->query->get('sort')){ $authors = $authors->findBy([],['surname'=>'desc']); }  
+        else { $authors = $authors->findAll();}
 
-        } 
-        elseif ('name_za' == $r->query->get('sort')){
-             $authors = $authors->findBy([],['name'=>'desc']);
-
-        }   
-        elseif('surname_az' == $r->query->get('sort')) {
-            $authors = $authors->findBy([],['surname'=>'asc']);
-
-        } 
-         elseif ('surname_za' == $r->query->get('sort')){
-             $authors = $authors->findBy([],['surname'=>'desc']);
-
-        }  
-         else {
-            $authors =$authors->findAll();
-        }
-
-
-        
         return $this->render('author/index.html.twig', [
             'authors' => $authors,
-            'sortBy' =>$r->query->get('sort'),
+            'sortBy' => $r->query->get('sort') ?? 'default',
         ]);
     }
     #[Route('/author/create', name: 'author_create', methods: ['GET'])]
-    public function create(): Response
+    public function create(Request $r): Response
     {
-        return $this->render('author/create.html.twig');
+        return $this->render('author/create.html.twig',[
+             'errors' => $r->getSession()->getFlashBag()->get('errors',[]),
+
+        ]);
 
     }
     #[Route('/author/store', name:'author_store', methods:['POST'])]
-    public function store(Request $r): Response
+    public function store(Request $r, ValidatorInterface $validator): Response
     {
-        
-
         $author = new Author;
+
         $author->
         setName($r->request->get('author_name'))->
         setSurname($r->request->get('author_surname'));
+
+        $errors = $validator->validate($author);
+
+        if(count($errors) > 0) {
+
+        foreach($errors as $error) {
+             $r->getSession()->getFlashBag()->add('errors', $error->getMessage());
+        }
+            return $this->redirectToRoute('author_create');
+        }
 
         $enitytManager = $this->getDoctrine()->getManager();
         $enitytManager->persist($author);
