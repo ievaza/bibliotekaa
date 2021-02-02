@@ -11,6 +11,7 @@
             <select name="author_id">
              <option value="0"> View All </option>
             {% for author in authors %}
+            
             <option value="{{author.id}}"  {% if author_id == author.id %} selected {% endif %}>
             {{author.name}} {{author.surname}}</option>
             {% endfor %}

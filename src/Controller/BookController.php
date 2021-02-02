@@ -15,6 +15,7 @@ class BookController extends AbstractController
     #[Route('/book', name: 'book_index')]
     public function index(Request $r): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // $books = $this->getDoctrine()->
         // getRepository(Book::class)->
         // findAll();
@@ -25,8 +26,11 @@ class BookController extends AbstractController
 
          $books = $this->getDoctrine()->
         getRepository(Book::class);
-         if('null' !== $r->query->get('author_id')) 
-        {$books = $books->findBy(['author_id' => $r->query->get('author_id')],);
+         if('null' !== $r->query->get('author_id') && $r->query->get('author_id') != 0) {
+             $books = $books->findBy(['author_id' => $r->query->get('author_id')], ['title' => 'asc']);
+        }
+        elseif ($r->query->get('author_id') == 0) {
+            $books = $books->findAll();
         }
          else{
                 $books = $books->findAll();
@@ -44,7 +48,7 @@ class BookController extends AbstractController
     {
         $authors = $this->getDoctrine()->
         getRepository(Author::class)->
-        findAll();
+        findBy([],['surname'=> 'asc']);
 
         return $this->render('book/create.html.twig',[
             'authors'=>$authors,
@@ -83,7 +87,7 @@ class BookController extends AbstractController
 
         $authors = $this->getDoctrine()->
         getRepository(Author::class)->
-        findAll();
+        findBy([],['surname'=>'asc']);
 
         return $this->render('book/edit.html.twig',[
             'book' =>$book,
