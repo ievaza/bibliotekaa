@@ -33,7 +33,6 @@ class AuthorController extends AbstractController
             'authors' => $authors,
             'sortBy' => $r->query->get('sort') ?? 'default',
             'success' => $r->getSession()->getFlashBag()->get('success',[]),
-
         ]);
     }
     #[Route('/author/create', name: 'author_create', methods: ['GET'])]
@@ -52,13 +51,13 @@ class AuthorController extends AbstractController
     #[Route('/author/store', name:'author_store', methods:['POST'])]
     public function store(Request $r, ValidatorInterface $validator): Response
     {
+        // $sumbittedToken = $r->request->get('token');
 
-        $sumbittedToken = $r->request->get('token');
+        // if ($this->isCsrfTokenValid('create_author_bla', $sumbittedToken)){
+        //     $r->getSession()->getFlashBag()->add('errors', 'Blogas Tokens CSRF');
+        //     return $this->redirectToRoute('author_create');
+        // }
 
-        if ($this->isCsrfTokenValid('create_author_bla', $sumbittedToken)){
-            $r->getSession()->getFlashBag()->add('errors', 'Blogas Tokens CSRF');
-            return $this->redirectToRoute('author_create');
-        }
         $author = new Author;
 
         $author->
@@ -71,9 +70,9 @@ class AuthorController extends AbstractController
             foreach($errors as $error) {
                 $r->getSession()->getFlashBag()->add('errors', $error->getMessage());
             }
-        $r->getSession()->getFlashBag()->add('author_name', $r->request->get('author_name') );
-        $r->getSession()->getFlashBag()->add('author_surname', $r->request->get('author_surname') );
-        return $this->redirectToRoute('author_create' );
+            $r->getSession()->getFlashBag()->add('author_name', $r->request->get('author_name') );
+            $r->getSession()->getFlashBag()->add('author_surname', $r->request->get('author_surname') );
+            return $this->redirectToRoute('author_create' );
         }
 
         $enitytManager = $this->getDoctrine()->getManager();
@@ -85,7 +84,7 @@ class AuthorController extends AbstractController
         return $this->redirectToRoute('author_index');
     }
 
-        #[Route('/author/edit/{id}', name: 'author_edit', methods: ['GET'])]
+    #[Route('/author/edit/{id}', name: 'author_edit', methods: ['GET'])]
     public function edit(Request $r, int $id): Response
     {
         $author = $this->getDoctrine()->

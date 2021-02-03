@@ -37,6 +37,12 @@ class Author
     /**
      * @ORM\Column(type="string", length=64)
      * @Assert\NotBlank(message="Blogai darai, pavarde negali buti tuscias")
+     * @Assert\Length(
+     * min=3,
+     * max=64,
+     * minMessage = "Turi buti bent 3 simboliai",
+     * maxMessage = "Gali buti max 64 simboliai ",
+     * )
      */
     private $surname;
 
