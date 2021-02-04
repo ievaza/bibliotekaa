@@ -1,34 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Books' list{% endblock %}
+{% block title %}Books' list
+{% endblock %}
 
 {% block body %}
 
-    <h1>Books in Library</h1>
 
-    List filter by:
-        <form action="{{path('book_index')}}" method="GET">
-            <select name="author_id">
-                <option value="0"> View All </option>
-                {% for author in authors %}
-                <option value="{{author.id}}" {% if author_id == author.id %} selected {% endif %}>
-                {{author.name}} {{author.surname}}
-                </option>
-                {% endfor %}
-            </select>
-        <button type="sumbit">FILTER IT! </button> 
-        </form>
-    <a href="{{path('book_index')}}"> CLEAR </a>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="card">
+					<div class="card-header">
+						<h1>Books in Library</h1>
+					</div>
+					<div class="card-body">
+						List filter by:
+						<form action="{{path('book_index')}}" method="GET">
+							<select name="author_id">
+								<option value="0">
+									View All
+								</option>
+								{% for author in authors %}
+									<option value="{{author.id}}" {% if author_id == author.id %} selected {% endif %}>
+										{{author.name}}
+										{{author.surname}}
+									</option>
+								{% endfor %}
+							</select>
+							<button type="sumbit">FILTER IT!
+							</button>
+						</form>
+						<a href="{{path('book_index')}}">
+							CLEAR
+						</a>
 
-    <ul>
-    {% for book in books %}
-    <li>
-    {{book.title}} {{book.author.name}} {{book.author.surname}}
-    <a href="{{path('book_edit',{id: book.id}) }}"> EDIT </a>
-    <form action="{{path('book_delete',{id: book.id}) }}" method="POST"> 
-    <button type="sumbit"> DELETE </button>
-    </form> 
-    </li>
-    {% endfor %}
-    </ul>
-{% endblock %}
+						<ul class="list-group list-group-flush">
+
+							{% for book in books %}
+								<li class="list-group-item"></li>
+								<h3>{{book.title}}</h3>
+								{{book.author.name}}
+								{{book.author.surname}}
+								<div class="list-group-item__button">
+									<form action="{{path('book_delete',{id: book.id}) }}" method="POST">
+										<a href="{{path('book_edit',{id: book.id}) }}" class="btn btn-outline-primary">
+
+											EDIT
+										</a>
+										<button type="sumbit" class="btn btn-outline-danger">
+											DELETE
+										</button>
+									</div>
+								</form>
+							</li>
+						{% endfor %}
+					</ul>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}

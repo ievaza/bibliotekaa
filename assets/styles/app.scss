@@ -19,6 +19,13 @@ body {
         }
     }
 }
+.list-group-item{
+    &__button{
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
 .form-check-input.custom{
     margin-left: 15px;
 }

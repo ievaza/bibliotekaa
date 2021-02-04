@@ -36,13 +36,12 @@
 						<ul class="list-group list-group-flush">
 							{% for author in authors %}
 								<li class="list-group-item"></li>
-								<div class="list-group-item__line">
+								<div class="list-group-item__button">
 									<span>
 										{{author.name}}
 										{{author.surname}}
 									</span>
 									<div class="list-group-item__line__buttons">
-
 										<a href="{{path('author_edit',{id: author.id}) }}" class="btn btn-primary">
 											EDIT</a>
 
