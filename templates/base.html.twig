@@ -11,9 +11,15 @@
 		<script src="http://localhost/biblioteka/public/build/app.js" defer></script>
 
 		<!-- include summernote css/js -->
-		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> {% block stylesheets %}{% endblock %}{% block javascripts %}{% endblock %}
+		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
+        {% block stylesheets %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+
 		</head>
 		<body>
+{% include 'menu.html.twig' %}
+
+        <main class="py-4">
 			{% if errors is defined and errors|length > 0 %}
 				{% include 'message/validation.html.twig' %}
 			{% endif %}
@@ -23,5 +29,6 @@
 			{% endif %}
 
 			{% block body %}{% endblock %}
+        </main>
 		</body>
 	</html>
