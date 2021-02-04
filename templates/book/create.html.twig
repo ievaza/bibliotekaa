@@ -9,13 +9,12 @@
         Title:  <input type="text" name="book_title"> 
         ISBN:  <input type="text" name="book_isbn"> 
         Pages:  <input type="text" name="book_pages"> 
-        About:  <textarea name="book_about"> </textarea>
+        About:  <textarea name="book_about" id="summernote"> </textarea>
         <select name="book_author_id">
         {% for author in authors %}
         <option value="{{author.id}}">{{author.name}} {{author.surname}}</option>
         {% endfor %}
         </select>
-
         <button type="submit"> Add new Book! </button>
     </form>
 
