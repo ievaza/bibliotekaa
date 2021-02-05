@@ -14,7 +14,7 @@ class AuthorController extends AbstractController
     #[Route('/author', name: 'author_index', methods: ['GET'])]
     public function index(Request $r): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'); // tikrina ar user yra prisijunges
 
         // $authors = $this->getDoctrine()->
         // getRepository(Author::class)->
@@ -51,12 +51,12 @@ class AuthorController extends AbstractController
     #[Route('/author/store', name:'author_store', methods:['POST'])]
     public function store(Request $r, ValidatorInterface $validator): Response
     {
-        // $sumbittedToken = $r->request->get('token');
+        $sumbittedToken = $r->request->get('token');
 
-        // if ($this->isCsrfTokenValid('create_author_bla', $sumbittedToken)){
-        //     $r->getSession()->getFlashBag()->add('errors', 'Blogas Tokens CSRF');
-        //     return $this->redirectToRoute('author_create');
-        // }
+        if (!$this->isCsrfTokenValid('create_author_bla', $sumbittedToken)){
+            $r->getSession()->getFlashBag()->add('errors', 'Blogas Tokens CSRF');
+            return $this->redirectToRoute('author_create'); 
+        }
 
         $author = new Author;
 
@@ -128,10 +128,11 @@ class AuthorController extends AbstractController
         $enitytManager->persist($author);
         $enitytManager->flush();
 
-        $r->getSession()->getFlashBag()->add('success', 'Autorius sekmingai buvo pridetas');
+        $r->getSession()->getFlashBag()->add('success', 'Autorius sekmingai buvo paredaguotas');
 
         return $this->redirectToRoute('author_index');
     }
+    
         #[Route('/author/delete/{id}', name: 'author_delete', methods: ['POST'])]
         public function delete($id): Response
     {

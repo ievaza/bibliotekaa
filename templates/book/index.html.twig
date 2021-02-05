@@ -16,7 +16,8 @@
 					<div class="card-body">
 						List filter by:
 						<form action="{{path('book_index')}}" method="GET">
-							<select name="author_id">
+							<div class="form-group">
+							<select name="author_id" class="form-control">
 								<option value="0">
 									View All
 								</option>
@@ -27,13 +28,15 @@
 									</option>
 								{% endfor %}
 							</select>
-							<button type="sumbit">FILTER IT!
+							</div>
+
+							<button type="sumbit"  class="btn btn-outline-dark">FILTER IT!
 							</button>
-						</form>
-						<a href="{{path('book_index')}}">
+						
+						<a href="{{path('book_index')}}" class="clear">
 							CLEAR
 						</a>
-
+						</form>
 						<ul class="list-group list-group-flush">
 
 							{% for book in books %}
@@ -60,4 +63,5 @@
 			</div>
 		</div>
 	</div>
-</div>{% endblock %}
+</div>
+{% endblock %}

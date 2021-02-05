@@ -13,28 +13,27 @@
 					<div class="card-header">
 						<h1>Create new Book ✅</h1>
 					</div>
-
-
 					<div class="card-body">
 						<form action="{{path('book_store')}}" method="POST">
 							<div class="form-group">
 								<label>Title</label>
-								<input type="text" name="book_title" class="form-control">
+								<input type="text" name="book_title" class="form-control" value="{{title}}">
 							</div>
 							<div class="form-group">
 								<label>ISBN</label>
-								<input type="text" name="book_isbn" class="form-control">
+								<input type="text" name="book_isbn" class="form-control" value="{{isbn}}">
 							</div>
 							<div class="form-group">
 								<label>Pages</label>
-								<input type="text" name="book_pages" class="form-control">
+								<input type="text" name="book_pages" class="form-control" value="{{pages}}">
 							</div>
                             <div class="form-group">
 							About:
-							<textarea name="book_about" id="summernote"></textarea>
+							<textarea name="book_about" id="summernote"> </textarea>
                             </div>
 							<div class="form-group" >
 								<select name="book_author_id" class="form-control">
+									<option value="0"> Select author</option>
 									{% for author in authors %}
 										<option value="{{author.id}}">{{author.name}}
 											{{author.surname}}</option>
@@ -46,7 +45,6 @@
 								Add new Book!
 							</button>
 						</form>
-
 					</div>
 				</div>
 			</div>

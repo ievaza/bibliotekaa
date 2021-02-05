@@ -21,11 +21,11 @@ class Book
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Blogai darai, TITLE negali buti tuscias")
+     * @Assert\NotBlank(message="Ivesk TITLE")
      * @Assert\Length(
      * min=3,
      * max=255,
-     * minMessage = "Turi buti bent 3 simboliai",
+     * minMessage = "Title turi buti bent 3 simboliai",
      * maxMessage = "Gali buti max 255 simboliai ",
      * )
      */
@@ -33,11 +33,11 @@ class Book
 
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\NotBlank(message="Blogai darai, TITLE negali buti tuscias")
+     * @Assert\NotBlank(message="Ivesk ISBN")
      * @Assert\Length(
      * min=3,
      * max=255,
-     * minMessage = "Turi buti bent 3 simboliai",
+     * minMessage = "ISBN turi buti bent 3 simboliai",
      * maxMessage = "Gali buti max 255 simboliai ",
      * )
      */
@@ -45,11 +45,14 @@ class Book
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Positive(message="Ivesk puslapius")
      */
     private $pages;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Aprasyk knyga")
+     * 
      */
     private $about;
 
